@@ -24,16 +24,33 @@ namespace FundamentosEF_Blog
             //    Slug = "backend-entity-framework"
             //};
 
+            //var user = context.Users.FirstOrDefault(x => x.Id.Equals(2));
+
             //var post = new Post
             //{
             //    Author = user,
-            //    Category = category,
+            //    Category = new Category
+            //    {
+            //        Name = "Teste",
+            //        Slug = "teste"
+            //    },
             //    Body = "<p>Hello World</p>",
-            //    Slug = "comecando-com-entity-framework",
-            //    Title = "Começando com Entity Framework",
-            //    Summary = "Neste artigo vamos aprender Entity Framework",
-            //    CreateDate = DateTime.Now,
-            //    LastUpdateDate = DateTime.Now
+            //    Slug = "meu-artigo",
+            //    Title = "Meu artigo",
+            //    Summary = "Neste artigo vamos conferir...",
+            //    Tags = new Tag[]
+            //    {
+            //        new Tag
+            //        {
+            //            Name = "Tag1",
+            //            Slug = "tag1"
+            //        },
+            //        new Tag
+            //        {
+            //            Name = "Tag2",
+            //            Slug = "tag2"
+            //        }
+            //    }
             //};
 
             //context.Posts.Add(post);

@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FundamentosEF_Blog.Models
 {
+    [Table("Tag")]
     public class Tag
     {
         public int Id { get; set; }

@@ -62,15 +62,15 @@ namespace FundamentosEF_Blog.Data.Mappings
             // forma mais complexa N:N
             builder.HasMany(x => x.Tags).WithMany(x => x.Posts).UsingEntity<Dictionary<string, object>>(
                 "PostTag",
-                post => post.HasOne<Tag>()
+                x => x.HasOne<Tag>()
                     .WithMany()
-                    .HasForeignKey("postId")
-                    .HasConstraintName("FK_PostTag_PostId")
-                    .OnDelete(DeleteBehavior.Cascade),
-                tag => tag.HasOne<Post>()
-                    .WithMany()
-                    .HasForeignKey("tagId")
+                    .HasForeignKey("TagId")
                     .HasConstraintName("FK_PostTag_TagId")
+                    .OnDelete(DeleteBehavior.Cascade),
+                x => x.HasOne<Post>()
+                    .WithMany()
+                    .HasForeignKey("PostId")
+                    .HasConstraintName("FK_PostTag_PostId")
                     .OnDelete(DeleteBehavior.Cascade));
 
             // forma simples N:N
