@@ -1,4 +1,5 @@
-﻿using FundamentosEF_Blog.Models;
+﻿using System;
+using FundamentosEF_Blog.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace FundamentosEF_Blog.Data
@@ -12,7 +13,10 @@ namespace FundamentosEF_Blog.Data
         public DbSet<User> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
-            => options.UseSqlServer("Server=localhost,1433;Database=Blog;User Id=sa;Password=1q2w3e!@#;TrustServerCertificate=True");
+        {
+            options.UseSqlServer("Server=localhost,1433;Database=Blog;User Id=sa;Password=1q2w3e!@#;TrustServerCertificate=True");
+            //options.LogTo(Console.WriteLine);
+        }
 
     }
 }

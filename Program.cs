@@ -43,7 +43,6 @@ namespace FundamentosEF_Blog
             //context.Posts.Add(post);
             //context.SaveChanges();
 
-
             //var post = context.Posts.FirstOrDefault(x => x.Id.Equals(2));
             //if (post != null)
             //{
@@ -53,14 +52,21 @@ namespace FundamentosEF_Blog
 
             //context.SaveChanges();
 
+            var posts = context.Posts
+                //.AsNoTracking()
+                .Include(x => x.Author)
+                .Include(x => x.Category)
+                .OrderByDescending(x => x.LastUpdateDate)
+                .FirstOrDefault();
 
-            var posts = context.Posts.AsNoTracking().Include(x => x.Author)
-                .OrderByDescending(x => x.LastUpdateDate).ToList();
+            posts.Author.Name = "Teste";
+            context.Posts.Update(posts);
+            context.SaveChanges();
 
-            foreach (var post in posts)
-            {
-                Console.WriteLine($"\"{post.Title}\" escrito por {post.Author?.Name}");
-            }
+            //foreach (var post in posts)
+            //{
+            //    Console.WriteLine($"\"{post.Title}\" escrito por {post.Author?.Name} em {post.Category.Name}");
+            //}
         }
     }
 }
