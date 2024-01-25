@@ -1,8 +1,4 @@
-﻿using System;
-using System.Linq;
-using FundamentosEF_Blog.Data;
-using FundamentosEF_Blog.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using FundamentosEF_Blog.Data;
 
 namespace FundamentosEF_Blog
 {
@@ -14,18 +10,18 @@ namespace FundamentosEF_Blog
 
             //var user = new User
             //{
-            //    Name = "Marcos Almeida",
-            //    Slug = "marcosalmeida",
-            //    Email = "malmeida@gmail.com",
+            //    Name = "Pedro Martinelli",
+            //    Slug = "pedromartinelli",
+            //    Email = "pmartinelli@gmail.com",
             //    Bio = "Estagiário",
-            //    Image = "https:marcosalmeida.io",
+            //    Image = "https:pedromartinelli.io",
             //    PasswordHash = "123987456"
             //};
 
             //var category = new Category
             //{
             //    Name = "Backend",
-            //    Slug = "backend-dotnet"
+            //    Slug = "backend-entity-framework"
             //};
 
             //var post = new Post
@@ -33,9 +29,9 @@ namespace FundamentosEF_Blog
             //    Author = user,
             //    Category = category,
             //    Body = "<p>Hello World</p>",
-            //    Slug = "comecando-com-dotnet",
-            //    Title = "Começando com .NET",   
-            //    Summary = "Neste artigo vamos aprender .NET",
+            //    Slug = "comecando-com-entity-framework",
+            //    Title = "Começando com Entity Framework",
+            //    Summary = "Neste artigo vamos aprender Entity Framework",
             //    CreateDate = DateTime.Now,
             //    LastUpdateDate = DateTime.Now
             //};
@@ -52,16 +48,16 @@ namespace FundamentosEF_Blog
 
             //context.SaveChanges();
 
-            var posts = context.Posts
-                //.AsNoTracking()
-                .Include(x => x.Author)
-                .Include(x => x.Category)
-                .OrderByDescending(x => x.LastUpdateDate)
-                .FirstOrDefault();
+            //var posts = context.Posts
+            //    .AsNoTracking()
+            //    .Include(x => x.Author)
+            //    .Include(x => x.Category)
+            //    .OrderByDescending(x => x.LastUpdateDate)
+            //    .ToList();
 
-            posts.Author.Name = "Teste";
-            context.Posts.Update(posts);
-            context.SaveChanges();
+            //posts.Author.Name = "Teste";
+            //context.Posts.Update(posts);
+            //context.SaveChanges();
 
             //foreach (var post in posts)
             //{

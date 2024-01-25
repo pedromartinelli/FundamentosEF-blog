@@ -1,9 +1,8 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
+using System.Collections.Generic;
 
 namespace FundamentosEF_Blog.Models
 {
-    [Table("Post")]
     public class Post
     {
         public int Id { get; set; }
@@ -14,12 +13,12 @@ namespace FundamentosEF_Blog.Models
         public DateTime CreateDate { get; set; }
         public DateTime LastUpdateDate { get; set; }
 
-        [ForeignKey("CategoryId")]
         public int CategoryId { get; set; }
         public Category Category { get; set; }
 
-        [ForeignKey("AuthorId")]
         public int AuthorId { get; set; }
         public User Author { get; set; }
+
+        public IList<Tag> Tags { get; set; }
     }
 }
