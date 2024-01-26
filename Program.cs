@@ -1,77 +1,48 @@
 ﻿using FundamentosEF_Blog.Data;
-using FundamentosEF_Blog.DTOs;
 using FundamentosEF_Blog.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Linq;
 
 namespace FundamentosEF_Blog
 {
     class Program
     {
-        static async Task Main(string[] args)
+        static void Main(string[] args)
         {
             using var context = new BlogDataContext();
 
-            var tag1 = new Tag
-            {
-                Name = "Backend",
-                Slug = "backend-tag"
-            };
+            //for (var i = 0; i <= 10; i++)
+            //{
+            //    var category = new Category
+            //    {
+            //        Name = $"Categoria {i}",
+            //        Slug = $"categoria-{i}"
+            //    };
 
-            var tag2 = new Tag
-            {
-                Name = "Dotnet",
-                Slug = "dotnet-tag"
-            };
+            //    context.Categories.Add(category);
+            //}
+            //context.SaveChanges();
 
-            List<Tag> tags = new List<Tag>() { tag1, tag2 };
 
-            var createPostDTO = new CreatePostDTO
-            {
-                Title = "Fundamentos do .NET",
-                Body = "...",
-                Summary = "...",
-                Slug = "fundamentos-C#",
-                Tags = tags,
-                CategoryId = 1,
-                AuthorId = 1,
-            };
+            var categories = GetCategories(context, 3, 6);
 
-            var result = await CreatePost(createPostDTO);
-
-            if (result)
+            foreach (var category in categories)
             {
-                Console.WriteLine("{\n \"Success\": true,\n \"Message\": \"Post criado com sucesso.\" \n} ");
-            }
-            else
-            {
-                Console.WriteLine("{\n \"Success\": false,\n \"Message\": \"Não foi possível criar o Post.\" \n}");
+                Console.WriteLine(category.Name);
             }
         }
 
-        //public static async Task<IEnumerable<Post>> GetPosts()
-        //{
-
-        //}
-
-        public static async Task<bool> CreatePost(CreatePostDTO createPostDTO)
+        public static List<Category> GetCategories(BlogDataContext context, int skip, int take)
         {
-            using var context = new BlogDataContext();
-            var createdPost = Post.FromDTO(createPostDTO);
-
-            try
-            {
-                await context.Posts.AddAsync(createdPost);
-                await context.SaveChangesAsync();
-
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-                return false;
-            }
+            var categories = context
+                .Categories
+                .AsNoTracking()
+                .Skip(skip)
+                .Take(take)
+                .ToList();
+            return categories;
         }
     }
 }
