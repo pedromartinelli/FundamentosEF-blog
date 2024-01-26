@@ -1,85 +1,77 @@
 ﻿using FundamentosEF_Blog.Data;
+using FundamentosEF_Blog.DTOs;
+using FundamentosEF_Blog.Models;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace FundamentosEF_Blog
 {
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             using var context = new BlogDataContext();
 
-            //var user = new User
-            //{
-            //    Name = "Pedro Martinelli",
-            //    Slug = "pedromartinelli",
-            //    Email = "pmartinelli@gmail.com",
-            //    Bio = "Estagiário",
-            //    Image = "https:pedromartinelli.io",
-            //    PasswordHash = "123987456"
-            //};
+            var tag1 = new Tag
+            {
+                Name = "Backend",
+                Slug = "backend-tag"
+            };
 
-            //var category = new Category
-            //{
-            //    Name = "Backend",
-            //    Slug = "backend-entity-framework"
-            //};
+            var tag2 = new Tag
+            {
+                Name = "Dotnet",
+                Slug = "dotnet-tag"
+            };
 
-            //var user = context.Users.FirstOrDefault(x => x.Id.Equals(2));
+            List<Tag> tags = new List<Tag>() { tag1, tag2 };
 
-            //var post = new Post
-            //{
-            //    Author = user,
-            //    Category = new Category
-            //    {
-            //        Name = "Teste",
-            //        Slug = "teste"
-            //    },
-            //    Body = "<p>Hello World</p>",
-            //    Slug = "meu-artigo",
-            //    Title = "Meu artigo",
-            //    Summary = "Neste artigo vamos conferir...",
-            //    Tags = new Tag[]
-            //    {
-            //        new Tag
-            //        {
-            //            Name = "Tag1",
-            //            Slug = "tag1"
-            //        },
-            //        new Tag
-            //        {
-            //            Name = "Tag2",
-            //            Slug = "tag2"
-            //        }
-            //    }
-            //};
+            var createPostDTO = new CreatePostDTO
+            {
+                Title = "Fundamentos do .NET",
+                Body = "...",
+                Summary = "...",
+                Slug = "fundamentos-C#",
+                Tags = tags,
+                CategoryId = 1,
+                AuthorId = 1,
+            };
 
-            //context.Posts.Add(post);
-            //context.SaveChanges();
+            var result = await CreatePost(createPostDTO);
 
-            //var post = context.Posts.FirstOrDefault(x => x.Id.Equals(2));
-            //if (post != null)
-            //{
-            //    post.Title = "Começando com EF Core";
-            //    context.Update(post);
-            //}
+            if (result)
+            {
+                Console.WriteLine("{\n \"Success\": true,\n \"Message\": \"Post criado com sucesso.\" \n} ");
+            }
+            else
+            {
+                Console.WriteLine("{\n \"Success\": false,\n \"Message\": \"Não foi possível criar o Post.\" \n}");
+            }
+        }
 
-            //context.SaveChanges();
+        //public static async Task<IEnumerable<Post>> GetPosts()
+        //{
 
-            //var posts = context.Posts
-            //    .AsNoTracking()
-            //    .Include(x => x.Author)
-            //    .Include(x => x.Category)
-            //    .OrderByDescending(x => x.LastUpdateDate)
-            //    .ToList();
+        //}
 
-            //posts.Author.Name = "Teste";
-            //context.Posts.Update(posts);
-            //context.SaveChanges();
+        public static async Task<bool> CreatePost(CreatePostDTO createPostDTO)
+        {
+            using var context = new BlogDataContext();
+            var createdPost = Post.FromDTO(createPostDTO);
 
-            //foreach (var post in posts)
-            //{
-            //    Console.WriteLine($"\"{post.Title}\" escrito por {post.Author?.Name} em {post.Category.Name}");
-            //}
+            try
+            {
+                await context.Posts.AddAsync(createdPost);
+                await context.SaveChangesAsync();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return false;
+            }
         }
     }
 }

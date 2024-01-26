@@ -34,6 +34,11 @@ namespace FundamentosEF_Blog.Data.Mappings
                 .HasColumnType("VARCHAR")
                 .HasMaxLength(255);
 
+            builder.Property(x => x.GitHub)
+                .HasColumnName("GitHub")
+                .HasColumnType("VARCHAR")
+                .HasMaxLength(2083);
+
             builder.Property(x => x.Bio)
                 .IsRequired()
                 .HasColumnName("Bio")
